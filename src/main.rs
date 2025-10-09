@@ -16,7 +16,7 @@ pub fn sub_reaper(args: Args, other: &[String]) -> i32 {
     command.push(args.command.clone());
     command.extend_from_slice(other);
     let workdir = &args.workdir;
-    let mut child_status: i32 = 0;
+    let child_status: i32 = 0;
 
     let proc_name = b"reaper\0";
     unsafe { prctl(PR_SET_NAME, proc_name.as_ptr() as *const c_char, 0, 0, 0); }
@@ -40,7 +40,7 @@ pub fn sub_reaper(args: Args, other: &[String]) -> i32 {
     }
 
     loop {
-        let child_pid = unsafe { wait(&mut child_status) };
+        let child_pid = unsafe { wait(std::ptr::null_mut()) };
         if child_pid < 0 { break; }
     }
     child_status
